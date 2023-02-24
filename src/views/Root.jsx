@@ -20,6 +20,11 @@ import ListItemText from "@mui/material/ListItemText";
 import { useNavigate } from "react-router-dom";
 import CategoryIcon from "@mui/icons-material/Category";
 import PersonIcon from "@mui/icons-material/Person";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { useState } from "react";
+import PublicIcon from "@mui/icons-material/Public";
+import EggIcon from "@mui/icons-material/Egg";
 
 const drawerWidth = 240;
 
@@ -81,6 +86,11 @@ export default function PersistentDrawerLeft() {
   };
   // const { categories } = useLoaderData();
   const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  // const history = useHistory();
+  const history = "";
+
   return (
     <Box>
       <Box sx={{ display: "flex" }}>
@@ -140,6 +150,30 @@ export default function PersistentDrawerLeft() {
             <ListItem disablePadding>
               <ListItemButton
                 onClick={() => {
+                  navigate(`/areas`);
+                }}
+              >
+                <ListItemIcon>
+                  <PublicIcon />
+                </ListItemIcon>
+                <ListItemText primary="Countries" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  navigate(`/ingredients`);
+                }}
+              >
+                <ListItemIcon>
+                  <EggIcon />
+                </ListItemIcon>
+                <ListItemText primary="Ingredients" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
                   navigate(`/aboutdev`);
                 }}
               >
@@ -163,6 +197,19 @@ export default function PersistentDrawerLeft() {
             Foodie!
           </Typography>
           <Divider />
+          <TextField
+            label="Search for a meal"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            variant="outlined"
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate(`/search/${searchTerm}`)}
+          >
+            Search
+          </Button>
 
           <Outlet />
           <Typography
