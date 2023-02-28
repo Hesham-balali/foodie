@@ -14,7 +14,6 @@ import { loader as category } from "./views/Category";
 import { loader as mealByIngredientLoader } from "./views/MealByIngredient";
 import { loader as SearchMeal } from "./views/SearchMeal";
 import { loader as getMealByArea } from "./views/MealByArea";
-
 import Root from "./views/Root";
 import Error from "./views/Error";
 import MealByCategory from "./views/MealByCategory";
@@ -23,20 +22,23 @@ import Category from "./views/Category";
 import SearchMealByName from "./views/SearchMeal";
 import MealByArea from "./views/MealByArea";
 import Aboutdev from "./views/AboutDev";
+import NewIndex from "./views/NewIndex";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    // loader: rootLoader,
     errorElement: <Error />,
     children: [
+      {
+        index: true,
+        element: <NewIndex />,
+      },
       {
         path: "categories",
         loader: category,
         element: <Category />,
       },
-
       {
         path: "categories/:name",
         loader: mealByCategoryLoader,

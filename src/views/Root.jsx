@@ -1,6 +1,8 @@
 import { useLoaderData, Outlet } from "react-router-dom";
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled, useTheme, ThemeProvider } from "@mui/material/styles";
+import heshamTheme from "../theme/index";
+import anotherTheme from "../theme/newtheme";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,6 +27,11 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 import PublicIcon from "@mui/icons-material/Public";
 import EggIcon from "@mui/icons-material/Egg";
+import App from "../views/test";
+import HomeIcon from "@mui/icons-material/Home";
+import { useNavigation } from "react-router-dom";
+import LinearProgress from "@mui/material/LinearProgress";
+import Switch from "@mui/material/Switch";
 
 const drawerWidth = 240;
 
@@ -86,118 +93,150 @@ export default function PersistentDrawerLeft() {
   };
   // const { categories } = useLoaderData();
   const navigate = useNavigate();
+  const [appTheme, setAppTheme] = React.useState(heshamTheme);
 
   const [searchTerm, setSearchTerm] = useState("");
   // const history = useHistory();
   const history = "";
-
+  const navigation = useNavigation();
   return (
-    <Box>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar color="primary" position="fixed" open={open}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{ mr: 2, ...(open && { display: "none" }) }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Menu
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            "& .MuiDrawer-paper": {
+    <ThemeProvider theme={appTheme}>
+      <Box>
+        <Box sx={{ display: "flex" }}>
+          <CssBaseline />
+          <AppBar color="primary" position="fixed" open={open}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{ mr: 2, ...(open && { display: "none" }) }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                Menu
+              </Typography>
+
+              <Switch
+                defaultChecked
+                color="secondary"
+                variant="contained"
+                checked={anotherTheme}
+                onChange={() => {
+                  if (appTheme === heshamTheme) {
+                    setAppTheme(anotherTheme);
+                  } else {
+                    setAppTheme(heshamTheme);
+                  }
+                }}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            </Toolbar>
+            <Box sx={{ width: "100%" }}>
+              {navigation.state === "loading" && <LinearProgress />}
+            </Box>
+          </AppBar>
+          <Drawer
+            sx={{
               width: drawerWidth,
-              boxSizing: "border-box",
-            },
-          }}
-          variant="persistent"
-          anchor="left"
-          open={open}
-        >
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  navigate(`/categories`);
-                }}
-              >
-                <ListItemIcon>
-                  <CategoryIcon />
-                </ListItemIcon>
-                <ListItemText primary="Categories" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  navigate(`/areas`);
-                }}
-              >
-                <ListItemIcon>
-                  <PublicIcon />
-                </ListItemIcon>
-                <ListItemText primary="Countries" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  navigate(`/ingredients`);
-                }}
-              >
-                <ListItemIcon>
-                  <EggIcon />
-                </ListItemIcon>
-                <ListItemText primary="Ingredients" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => {
-                  navigate(`/aboutdev`);
-                }}
-              >
-                <ListItemIcon>
-                  <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary="About Dev" />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Drawer>
-        <Main open={open}>
-          <DrawerHeader />
-          <Typography
-            fontWeight="600"
-            align="center"
-            variant="h1"
-            color="textPrimary"
-            marginBottom="30px"
+              flexShrink: 0,
+              "& .MuiDrawer-paper": {
+                width: drawerWidth,
+                boxSizing: "border-box",
+              },
+            }}
+            variant="persistent"
+            anchor="left"
+            open={open}
           >
-            Foodie!
-          </Typography>
-          <Divider />
-          <TextField
+            <DrawerHeader>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === "ltr" ? (
+                  <ChevronLeftIcon />
+                ) : (
+                  <ChevronRightIcon />
+                )}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            <List>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate(`/`);
+                  }}
+                >
+                  <ListItemIcon>
+                    <HomeIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Home" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate(`/categories`);
+                  }}
+                >
+                  <ListItemIcon>
+                    <CategoryIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Categories" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate(`/areas`);
+                  }}
+                >
+                  <ListItemIcon>
+                    <PublicIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Countries" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate(`/ingredients`);
+                  }}
+                >
+                  <ListItemIcon>
+                    <EggIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Ingredients" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate(`/aboutdev`);
+                  }}
+                >
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="About Dev" />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Drawer>
+          <Main open={open}>
+            <DrawerHeader />
+            <Typography
+              fontWeight="600"
+              align="center"
+              variant="h1"
+              color="textPrimary"
+              marginBottom="30px"
+            >
+              Foodie!
+            </Typography>
+            <Divider />
+            {/* <TextField
             label="Search for a meal"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
@@ -209,20 +248,21 @@ export default function PersistentDrawerLeft() {
             onClick={() => navigate(`/search/${searchTerm}`)}
           >
             Search
-          </Button>
-
-          <Outlet />
-          <Typography
-            fontWeight="400"
-            align="center"
-            variant="body1"
-            color="textPrimary"
-            marginTop="100px"
-          >
-            © Copyright - Coding Front 2023 / Just React - Foodie App By HeshaM
-          </Typography>
-        </Main>
+          </Button> */}
+            <Outlet />
+            <Typography
+              fontWeight="400"
+              align="center"
+              variant="body1"
+              color="textPrimary"
+              marginTop="100px"
+            >
+              © Copyright - Coding Front 2023 / Just React - Foodie App By
+              HeshaM
+            </Typography>
+          </Main>
+        </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 }

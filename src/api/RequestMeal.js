@@ -10,6 +10,7 @@ const formatMeal = (data) => {
     strMealThumb,
     strArea,
     strCategory,
+    strYoutube,
   } = meal;
   const ingredients = [];
   for (let i = 1; i < 21; i++) {
@@ -31,6 +32,7 @@ const formatMeal = (data) => {
     thumb: strMealThumb,
     area: strArea,
     category: strCategory,
+    youtube: strYoutube,
     ingredients,
   };
 };
