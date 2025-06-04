@@ -226,6 +226,11 @@ export default function PersistentDrawerLeft() {
           </Drawer>
           <Main open={open}>
             <DrawerHeader />
+            <CardMedia
+              sx={{ height: 300 }}
+              image={require(`../`)}
+              title="hesham"
+            />
             <Typography
               fontWeight="600"
               align="center"
